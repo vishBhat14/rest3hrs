@@ -86,6 +86,62 @@ button{
         //    ShowUserOnScreen(obj);}
 
         
+    //     function removefrombackend(obj){
+    //     axios.delete(`https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData/${obj._id}`)
+    //     .then((res)=>{
+    //      console.log("successfully deleted");
+    //     }).catch((err) =>
+    //     {
+    //     console.log(" Finding Difficult to delete user from backend ")
+    //     } 
+    //     ) 
+    //   } 
+   
+    //       function ShowUserOnScreen(obj)
+    //       {
+            
+    //         const parentrele= document.getElementById('listOfitems');
+    //         const childele=document.createElement('li');
+    //         childele.textContent=childele.textContent+obj.itemname+"-"+obj. description+"-"+obj.price+"-"+obj. quantity;
+
+    //         const buy1btn=document.createElement("input");
+    //        buy1btn.type="button";
+    //         buy1btn.value='buy 1';
+    //         const buy2btn=document.createElement('input');
+    //         buy2btn.type='button';
+    //         buy2btn.value='buy 2';
+    //         var change = document.getElementById('quantity').value;
+    //         buy1btn.onclick = () => {
+    //              removefrombackend(obj);
+    //             // localStorage.removeItem(obj.emails);
+    //              parentrele.removeChild(childele);
+    //             document.getElementById('itemname').value=obj.itemname;
+    //             document.getElementById('description').value=obj.description;
+    //             document.getElementById('price').value=obj.price;
+    //             change = change - 1;
+    //             document.getElementById('quantity').value = change;
+    //         }
+    //         buy2btn.onclick =() => {
+    //             //editfrombackend(obj)
+    //             removefrombackend(obj);
+    //             // console.log('edit succesful')
+    //             parentrele.removeChild(childele);
+    //             // localStorage.removeItem(obj.emails);
+    //             document.getElementById('itemname').value=obj.itemname;
+    //             document.getElementById('description').value=obj.description;
+    //             document.getElementById('price').value=obj.price;
+    //             change = change - 2;
+    //             document.getElementById('quantity').value = change;
+    //           }
+    //         childele.appendChild(buy1btn);
+    //         childele.appendChild(buy2btn);
+
+    //           parentrele.appendChild(childele);
+            
+    //       }
+          
+        }
+         
         function removefrombackend(obj){
         axios.delete(`https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData/${obj._id}`)
         .then((res)=>{
@@ -96,15 +152,7 @@ button{
         } 
         ) 
       } 
-    //   function editfrombackend(obj){
-    //     axios.put(`https://crudcrud.com/api/6069d02c9cd94d35bda2a2d2931a1db0/appointmentData/${obj._id}`)
-    //     .then((res)=>console.log('succesfully updated'))
-    //     .catch((err) =>
-    //     {
-    //     console.log(" Finding Difficult to delete user from backend ")
-    //     } )
-
-    //   }
+   
           function ShowUserOnScreen(obj)
           {
             
@@ -147,8 +195,6 @@ button{
               parentrele.appendChild(childele);
             
           }
-          
-        }
         window.addEventListener("DOMContentLoaded",()=>{
             axios.get('https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData')
            .then((res)=>{console.log(res);
@@ -157,69 +203,7 @@ button{
                 ShowUserOnScreen(res.data[i])
             }})
            .catch((err)=>console.log(err))
-           
-        function removefrombackend(obj){
-        axios.delete(`https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData/${obj._id}`)
-        .then((res)=>{
-         console.log("successfully deleted");
-        }).catch((err) =>
-        {
-        console.log(" Finding Difficult to delete user from backend ")
-        } 
-        ) 
-      } 
-    //   function editfrombackend(obj){
-    //     axios.put(`https://crudcrud.com/api/6069d02c9cd94d35bda2a2d2931a1db0/appointmentData/${obj._id}`)
-    //     .then((res)=>console.log('succesfully updated'))
-    //     .catch((err) =>
-    //     {
-    //     console.log(" Finding Difficult to delete user from backend ")
-    //     } )
-
-    //   }
-    function ShowUserOnScreen(obj)
-          {
-            
-            const parentrele= document.getElementById('listOfitems');
-            const childele=document.createElement('li');
-            childele.textContent=childele.textContent+obj.itemname+"-"+obj. description+"-"+obj.price+"-"+obj. quantity;
-
-            const buy1btn=document.createElement("input");
-            buy1btn.type="button";
-            buy1btn.value='buy 1';
-            const buy2btn=document.createElement('input');
-            buy2btn.type='button';
-            buy2btn.value='buy 2';
-            var change = document.getElementById('quantity').value;
-            buy1btn.onclick = () => {
-                 removefrombackend(obj);
-                // localStorage.removeItem(obj.emails);
-                 parentrele.removeChild(childele);
-                document.getElementById('itemname').value=obj.itemname;
-                document.getElementById('description').value=obj.description;
-                document.getElementById('price').value=obj.price;
-                change = change - 1;
-                document.getElementById('quantity').value = change;
-            }
-            buy2btn.onclick =() => {
-                //editfrombackend(obj)
-                 removefrombackend(obj);
-                // console.log('edit succesful')
-                parentrele.removeChild(childele);
-                // localStorage.removeItem(obj.emails);
-                document.getElementById('itemname').value=obj.itemname;
-                document.getElementById('description').value=obj.description;
-                document.getElementById('price').value=obj.price;
-                change = change - 2;
-                document.getElementById('quantity').value = change;
-              }
-            childele.appendChild(buy1btn);
-            childele.appendChild(buy2btn);
-
-              parentrele.appendChild(childele);
-            
-          }
-          
+     
         })
         
      
