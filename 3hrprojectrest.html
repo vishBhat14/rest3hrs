@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+      
+h2{ text-align:center;
+color: red;}
+
+form{border:10px solid yellow;margin:95px;
+text-align: center;
+background-color: azure;}
+p{
+    text-align: center;
+}
+input{ width:200px;
+color: green;
+
+}
+label{
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black
+}
+button{
+    width: 260px;
+    font-size: 25px;
+    background-color:orangered;
+}
+    </style>
+    
+    <form onsubmit="SaveToLocalStorage(event)">
+        <fieldset>
+        <h2>Grocery store </h2><br>
+        <p>INVENTORY LIST</p><br>
+        <label> Item name</label><br>
+        <input type="text" id="itemname" name="itemname" required><br>
+        <label>item description</label><br>
+        <input type="text" id= "description" name="description" required><br>
+        <label>price in rupees</label><br>
+
+        <input type="number" id="price" name="price" required><br>
+        <label>quantity</label><br>
+        <input type="number" id="quantity" name="quantity" required>
+        <br><br>
+        
+        <button>ADD ITEMS</button>
+        </fieldset>
+    </form>
+    <ul id='listOfitems'></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
+    <script>
+        
+        function SaveToLocalStorage(event)
+        {
+            event.preventDefault();
+            const itemname=event.target.itemname.value;
+            const description=event.target.description.value;
+            const price=event.target.price.value;
+            const quantity=event.target.quantity.value;
+
+        //    localStorage.setItem('name',names);
+        //    localStorage.setItem('email',emails);
+        //    localStorage.setItem('telp',telps);
+        //    localStorage.setItem('time',times);
+           
+           const obj={
+            itemname,
+            description,
+            price,
+            quantity
+           } 
+           axios.post('https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData',obj)
+           .then((res)=>{
+            console.log(res)
+            ShowUserOnScreen(res.data)
+           }).catch((err)=>{console.log(err);
+        document.body.innerHTML=document.body.innerHTML+"<h4>something went wrong</h4>"})
+        //    const strinobj=JSON.stringify(obj);
+        // //    localStorage.setItem(emails,strinobj);
+        //    ShowUserOnScreen(obj);}
+
+        
+        function removefrombackend(obj){
+        axios.delete(`https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData/${obj._id}`)
+        .then((res)=>{
+         console.log("successfully deleted");
+        }).catch((err) =>
+        {
+        console.log(" Finding Difficult to delete user from backend ")
+        } 
+        ) 
+      } 
+    //   function editfrombackend(obj){
+    //     axios.put(`https://crudcrud.com/api/6069d02c9cd94d35bda2a2d2931a1db0/appointmentData/${obj._id}`)
+    //     .then((res)=>console.log('succesfully updated'))
+    //     .catch((err) =>
+    //     {
+    //     console.log(" Finding Difficult to delete user from backend ")
+    //     } )
+
+    //   }
+          function ShowUserOnScreen(obj)
+          {
+            
+            const parentrele= document.getElementById('listOfitems');
+            const childele=document.createElement('li');
+            childele.textContent=childele.textContent+obj.itemname+"-"+obj. description+"-"+obj.price+"-"+obj. quantity;
+
+            const buy1btn=document.createElement("input");
+           buy1btn.type="button";
+            buy1btn.value='buy 1';
+            const buy2btn=document.createElement('input');
+            buy2btn.type='button';
+            buy2btn.value='buy 2';
+            var change = document.getElementById('quantity').value;
+            buy1btn.onclick = () => {
+                 removefrombackend(obj);
+                // localStorage.removeItem(obj.emails);
+                 parentrele.removeChild(childele);
+                document.getElementById('itemname').value=obj.itemname;
+                document.getElementById('description').value=obj.description;
+                document.getElementById('price').value=obj.price;
+                change = change - 1;
+                document.getElementById('quantity').value = change;
+            }
+            buy2btn.onclick =() => {
+                //editfrombackend(obj)
+                removefrombackend(obj);
+                // console.log('edit succesful')
+                parentrele.removeChild(childele);
+                // localStorage.removeItem(obj.emails);
+                document.getElementById('itemname').value=obj.itemname;
+                document.getElementById('description').value=obj.description;
+                document.getElementById('price').value=obj.price;
+                change = change - 2;
+                document.getElementById('quantity').value = change;
+              }
+            childele.appendChild(buy1btn);
+            childele.appendChild(buy2btn);
+
+              parentrele.appendChild(childele);
+            
+          }
+          
+        }
+        window.addEventListener("DOMContentLoaded",()=>{
+            axios.get('https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData')
+           .then((res)=>{console.log(res);
+            for(var i=0;i<res.data.length;i++)
+            {
+                ShowUserOnScreen(res.data[i])
+            }})
+           .catch((err)=>console.log(err))
+           
+        function removefrombackend(obj){
+        axios.delete(`https://crudcrud.com/api/1e971ec3690341a08fa2dc74767a1dfb/appointmentData/${obj._id}`)
+        .then((res)=>{
+         console.log("successfully deleted");
+        }).catch((err) =>
+        {
+        console.log(" Finding Difficult to delete user from backend ")
+        } 
+        ) 
+      } 
+    //   function editfrombackend(obj){
+    //     axios.put(`https://crudcrud.com/api/6069d02c9cd94d35bda2a2d2931a1db0/appointmentData/${obj._id}`)
+    //     .then((res)=>console.log('succesfully updated'))
+    //     .catch((err) =>
+    //     {
+    //     console.log(" Finding Difficult to delete user from backend ")
+    //     } )
+
+    //   }
+    function ShowUserOnScreen(obj)
+          {
+            
+            const parentrele= document.getElementById('listOfitems');
+            const childele=document.createElement('li');
+            childele.textContent=childele.textContent+obj.itemname+"-"+obj. description+"-"+obj.price+"-"+obj. quantity;
+
+            const buy1btn=document.createElement("input");
+            buy1btn.type="button";
+            buy1btn.value='buy 1';
+            const buy2btn=document.createElement('input');
+            buy2btn.type='button';
+            buy2btn.value='buy 2';
+            var change = document.getElementById('quantity').value;
+            buy1btn.onclick = () => {
+                 removefrombackend(obj);
+                // localStorage.removeItem(obj.emails);
+                 parentrele.removeChild(childele);
+                document.getElementById('itemname').value=obj.itemname;
+                document.getElementById('description').value=obj.description;
+                document.getElementById('price').value=obj.price;
+                change = change - 1;
+                document.getElementById('quantity').value = change;
+            }
+            buy2btn.onclick =() => {
+                //editfrombackend(obj)
+                 removefrombackend(obj);
+                // console.log('edit succesful')
+                parentrele.removeChild(childele);
+                // localStorage.removeItem(obj.emails);
+                document.getElementById('itemname').value=obj.itemname;
+                document.getElementById('description').value=obj.description;
+                document.getElementById('price').value=obj.price;
+                change = change - 2;
+                document.getElementById('quantity').value = change;
+              }
+            childele.appendChild(buy1btn);
+            childele.appendChild(buy2btn);
+
+              parentrele.appendChild(childele);
+            
+          }
+          
+        })
+        
+     
+        
+
+
+    </script>
+</body>
+</html>
